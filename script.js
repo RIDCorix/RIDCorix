@@ -111,13 +111,22 @@ const selectedIcon = localStorage.getItem('selected-icon');
 
 // We obtain the current theme that the interface has by validating the dark-theme class
 const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light';
-const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'moon-icon' : 'sun-icon';
+const getCurrentIcon = () => themeButton ? (themeButton.querySelector('.nav__theme-icon').classList.contains(iconTheme) ? 'sun' : 'moon') : 'moon';
 
 // We validate if the user previously chose a topic
 if (selectedTheme) {
   // If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
   document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme);
-  themeButton.classList[selectedIcon === 'moon-icon' ? 'add' : 'remove'](iconTheme);
+  if(themeButton) {
+    const themeIcon = themeButton.querySelector('.nav__theme-icon');
+    if(selectedIcon === 'sun') {
+      themeIcon.classList.add(iconTheme);
+      themeIcon.textContent = '☀️';
+    } else {
+      themeIcon.classList.remove(iconTheme);
+      themeIcon.textContent = '🌙';
+    }
+  }
 }
 
 // Activate / deactivate the theme manually with the button
@@ -125,7 +134,16 @@ if(themeButton) {
     themeButton.addEventListener('click', () => {
         // Add or remove the dark / icon theme
         document.body.classList.toggle(darkTheme);
-        themeButton.classList.toggle(iconTheme);
+        const themeIcon = themeButton.querySelector('.nav__theme-icon');
+        themeIcon.classList.toggle(iconTheme);
+        
+        // Update icon text
+        if(themeIcon.classList.contains(iconTheme)) {
+            themeIcon.textContent = '☀️';
+        } else {
+            themeIcon.textContent = '🌙';
+        }
+        
         // We save the theme and the current icon that the user chose
         localStorage.setItem('selected-theme', getCurrentTheme());
         localStorage.setItem('selected-icon', getCurrentIcon());
