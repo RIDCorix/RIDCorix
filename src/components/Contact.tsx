@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Mail, Phone, MapPin, Send } from 'lucide-react'
 import { useState } from 'react'
+import HydrationSafeDiv from './HydrationSafeDiv'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ export default function Contact() {
 
   return (
     <section className="py-20 bg-gray-50 dark:bg-gray-900" id="contact">
-      <div className="container mx-auto px-6">
+      <HydrationSafeDiv className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -50,7 +51,7 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <HydrationSafeDiv className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -213,8 +214,8 @@ export default function Contact() {
               </CardContent>
             </Card>
           </motion.div>
-        </div>
-      </div>
+        </HydrationSafeDiv>
+      </HydrationSafeDiv>
     </section>
   )
 }

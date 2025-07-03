@@ -11,16 +11,16 @@ const projects = [
   {
     title: 'Skellar',
     description: 'A skill tree platform for both online courses and in-person workshops, designed to help users track their learning progress and achievements.',
-    image: '/api/placeholder/600/400',
+    image: '/projects/network.png',
     technologies: ['Next.js', 'TypeScript', 'Stripe', 'PostgreSQL', 'Tailwind CSS'],
     liveUrl: 'https://skellar-mvp-frontend.vercel.app/',
     githubUrl: null,
     featured: true
   },
   {
-    title: 'Task Management App',
-    description: 'Collaborative project management tool with real-time updates, file sharing, and team communication features.',
-    image: '/api/placeholder/600/400',
+    title: 'Network The Game',
+    description: 'Code to define your units. Gather, build, and conquer in this multiplayer strategy game where you can create your own units and battle against others.',
+    image: '/projects/network.png',
     technologies: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Material-UI'],
     liveUrl: '#',
     githubUrl: '#',
@@ -100,7 +100,13 @@ export default function Projects() {
               <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
                 <div className="relative h-48 overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                    <span className="text-white text-lg font-semibold">Project Image</span>
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      layout="fill"
+                      objectFit="cover"
+                      className="object-cover"
+                    />
                   </div>
                 </div>
                 <CardHeader>
