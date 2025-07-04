@@ -132,12 +132,14 @@ export default function Projects() {
                         Live Demo
                       </a>
                     </Button>
-                    <Button asChild variant="outline" size="sm">
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="w-4 h-4 mr-2" />
-                        Code
-                      </a>
-                    </Button>
+                    {project.githubUrl && (
+                      <Button asChild variant="outline" size="sm">
+                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                          <Github className="w-4 h-4 mr-2" />
+                          Code
+                        </a>
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -198,11 +200,13 @@ export default function Projects() {
                           <ExternalLink className="w-4 h-4" />
                         </a>
                       </Button>
-                      <Button asChild size="sm" variant="ghost" className="p-2">
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                          <Github className="w-4 h-4" />
-                        </a>
-                      </Button>
+                      {project.githubUrl && (
+                        <Button asChild size="sm" variant="ghost" className="p-2">
+                          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                            <Github className="w-4 h-4" />
+                          </a>
+                        </Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

@@ -12,7 +12,7 @@ export default function NotFound() {
             Article Not Found
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            The article you're looking for doesn't exist or has been moved.
+            The article you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
         </div>
         

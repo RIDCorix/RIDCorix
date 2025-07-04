@@ -15,12 +15,13 @@ import 'highlight.js/styles/github-dark.css'
 
 // Remove the large articles array that was here before
 
-type Params = {
+type Params = Promise<{
   slug: string
-}
+}>
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const article = getArticleBySlug(params.slug)
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
   
   if (!article) {
     return {
@@ -41,8 +42,9 @@ export function generateStaticParams() {
   }))
 }
 
-export default function ArticlePage({ params }: { params: Params }) {
-  const article = getArticleBySlug(params.slug)
+export default async function ArticlePage({ params }: { params: Params }) {
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
   const allArticles = getArticles()
 
   if (!article) {
@@ -116,34 +118,38 @@ export default function ArticlePage({ params }: { params: Params }) {
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeHighlight, rehypeRaw]}
               components={{
-                code: ({ node, inline, className, children, ...props }: any) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                code: (props: any) => {
+                  const { inline, className, children, ...rest } = props
                   return inline ? (
                     <code
                       className="bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-1 py-0.5 rounded text-sm"
-                      {...props}
+                      {...rest}
                     >
                       {children}
                     </code>
                   ) : (
-                    <code className={className} {...props}>
+                    <code className={className} {...rest}>
                       {children}
                     </code>
                   )
                 },
-                pre: ({ children, ...props }: any) => (
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                pre: (props: any) => (
                   <pre
                     className="bg-gray-900 dark:bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto border"
                     {...props}
                   >
-                    {children}
+                    {props.children}
                   </pre>
                 ),
-                blockquote: ({ children, ...props }: any) => (
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                blockquote: (props: any) => (
                   <blockquote
                     className="border-l-4 border-blue-500 pl-4 italic text-gray-600 dark:text-gray-400 my-6"
                     {...props}
                   >
-                    {children}
+                    {props.children}
                   </blockquote>
                 ),
               }}

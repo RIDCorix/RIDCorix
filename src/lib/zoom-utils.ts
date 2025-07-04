@@ -8,8 +8,6 @@ import React from 'react'
 export function isZoomedOut(): boolean {
   if (typeof window === 'undefined') return false
   
-  // Check if the window devicePixelRatio suggests zoom out
-  const devicePixelRatio = window.devicePixelRatio || 1
   const screenWidth = window.screen.width
   const windowWidth = window.innerWidth
   
@@ -54,11 +52,11 @@ export function applyZoomSafeStyles(element: HTMLElement | null) {
 
 // Hook to handle zoom changes
 export function useZoomAwareInteractions() {
-  if (typeof window === 'undefined') return { isZoomedOut: false }
-  
   const [zoomedOut, setZoomedOut] = React.useState(false)
   
   React.useEffect(() => {
+    if (typeof window === 'undefined') return
+    
     const checkZoom = () => {
       setZoomedOut(isZoomedOut())
     }
@@ -75,6 +73,11 @@ export function useZoomAwareInteractions() {
       window.removeEventListener('orientationchange', checkZoom)
     }
   }, [])
+  
+  // Return appropriate value for both SSR and client
+  if (typeof window === 'undefined') {
+    return { isZoomedOut: false }
+  }
   
   return { isZoomedOut: zoomedOut }
 }

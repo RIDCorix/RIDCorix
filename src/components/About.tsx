@@ -47,7 +47,7 @@ export default function About() {
             About Me
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            I'm a passionate full-stack developer with over 5 years of experience creating 
+            I&apos;m a passionate full-stack developer with over 5 years of experience creating 
             digital solutions that combine beautiful design with robust functionality. 
             I love turning complex problems into simple, elegant interfaces.
           </p>
@@ -64,12 +64,12 @@ export default function About() {
               My Journey
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Started as a curious student fascinated by how websites work, I've evolved 
+              Started as a curious student fascinated by how websites work, I&apos;ve evolved 
               into a seasoned developer who bridges the gap between design and development. 
               My journey has taken me through various industries, from startups to enterprise solutions.
             </p>
             <p className="text-gray-600 dark:text-gray-300">
-              When I'm not coding, you'll find me exploring new technologies, contributing to 
+              When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to 
               open-source projects, or sharing knowledge with the developer community through 
               blog posts and speaking engagements.
             </p>
