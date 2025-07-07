@@ -83,7 +83,7 @@ export default function Hero() {
                 <p className="inline-block text-lg md:text-xl font-medium text-gray-700 dark:text-gray-300 italic min-h-[1.5em] flex items-center justify-center">
                   <TypingAnimation 
                     text="Just gamble"
-                    speed={20}
+                    speed={40}
                     delay={1000}
                     className="inline-block"
                   /><TypingAnimation 
