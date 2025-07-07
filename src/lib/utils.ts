@@ -6,7 +6,16 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getAssetPath(path: string): string {
-  const isGithubPages = process.env.NODE_ENV === 'production' && process.env.GITHUB_PAGES === 'true'
-  const basePath = isGithubPages ? '/RIDCorix' : ''
-  return `${basePath}${path}`
+  // Simple detection: if we're on GitHub Pages (ridcorix.github.io), use the base path
+  if (typeof window !== 'undefined') {
+    // Client-side: check the current URL
+    if (window.location.hostname === 'ridcorix.github.io') {
+      return `/RIDCorix${path}`
+    }
+    return path
+  } else {
+    // Server-side: use environment variables
+    const isGithubPages = process.env.GITHUB_PAGES === 'true'
+    return isGithubPages ? `/RIDCorix${path}` : path
+  }
 }
