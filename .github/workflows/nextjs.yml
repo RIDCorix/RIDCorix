@@ -76,7 +76,17 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       
       - name: Build with Next.js
+        env:
+          GITHUB_PAGES: true
+          NODE_ENV: production
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      
+      - name: List build output
+        run: |
+          echo "Contents of ./out directory:"
+          ls -la ./out/
+          echo "Contents of ./out/_next/ (if exists):"
+          ls -la ./out/_next/ || echo "No _next directory found"
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
