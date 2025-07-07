@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
 import Image from 'next/image'
+import TypingAnimation from './TypingAnimation'
 
 export default function Hero() {
   return (
@@ -69,15 +70,44 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
+            className="mb-8 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg blur-xl"></div>
+              <blockquote className="font-mono relative bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-blue-200/30 dark:border-blue-400/30 rounded-lg p-6 text-center">
+                <div className="inline-block text-4xl text-blue-500/30 dark:text-blue-400/30 mb-2">&ldquo;</div>
+                <p className="inline-block text-lg md:text-xl font-medium text-gray-700 dark:text-gray-300 italic min-h-[1.5em] flex items-center justify-center">
+                  <TypingAnimation 
+                    text="Just gamble"
+                    speed={20}
+                    delay={1000}
+                    className="inline-block"
+                  /><TypingAnimation 
+                    text=", if you prepared to lose it all."
+                    speed={100}
+                    delay={3000}
+                    className="inline-block"
+                  />
+                </p>
+                <div className="inline-block text-4xl text-blue-500/30 dark:text-blue-400/30 mt-2">&rdquo;</div>
+                <cite className="block text-sm text-gray-500 dark:text-gray-400 font-medium not-italic">— My Motto</cite>
+              </blockquote>
+            </div>
+          </motion.div>
+
+          <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
           >
-            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer">
               View My Work
             </Button>
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" className="cursor-pointer">
               Get In Touch
             </Button>
           </motion.div>
@@ -86,7 +116,7 @@ export default function Hero() {
             className="flex justify-center space-x-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
           >
             <motion.a
               href="#"
