@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
 import Image from 'next/image'
 import TypingAnimation from './TypingAnimation'
+import { getAssetPath } from '@/lib/utils'
 
 export default function Hero() {
   return (
@@ -36,7 +37,7 @@ export default function Hero() {
             >
               <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-800">
                 <Image
-                  src="/avatar.png"
+                  src={getAssetPath('/avatar.png')}
                   alt="Ray's Avatar"
                   width={128}
                   height={128}

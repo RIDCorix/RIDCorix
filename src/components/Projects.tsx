@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ExternalLink, Github } from 'lucide-react'
 import Image from 'next/image'
+import { getAssetPath } from '@/lib/utils'
 
 const projects = [
   {
@@ -101,7 +102,7 @@ export default function Projects() {
                 <div className="relative h-48 overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                     <Image
-                      src={project.image}
+                      src={getAssetPath(project.image)}
                       alt={project.title}
                       layout="fill"
                       objectFit="cover"
