@@ -12,7 +12,7 @@ const projects = [
   {
     title: 'Skellar',
     description: 'A skill tree platform for both online courses and in-person workshops, designed to help users track their learning progress and achievements.',
-    image: '/projects/network.png',
+    image: '/projects/skellar.png',
     technologies: ['Next.js', 'TypeScript', 'Stripe', 'PostgreSQL', 'Tailwind CSS'],
     liveUrl: 'https://skellar-mvp-frontend.vercel.app/',
     githubUrl: null,
@@ -28,9 +28,9 @@ const projects = [
     featured: true
   },
   {
-    title: 'Weather Dashboard',
-    description: 'Beautiful weather application with location-based forecasts, interactive maps, and weather alerts.',
-    image: '/api/placeholder/600/400',
+    title: 'Unfired Studio',
+    description: 'A creative studio website showcasing portfolio, lessons, and resources, with a modern design and smooth animations.',
+    image: '/projects/unfired-studio.png',
     technologies: ['Vue.js', 'OpenWeather API', 'Chart.js', 'SCSS'],
     liveUrl: '#',
     githubUrl: '#',
@@ -169,9 +169,15 @@ export default function Projects() {
                 whileHover={{ y: -5 }}
               >
                 <Card className="hover:shadow-lg transition-all duration-300 h-full">
-                  <div className="relative h-32 overflow-hidden">
-                    <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
-                      <span className="text-white text-sm">Project Image</span>
+                  <div className="relative h-48 overflow-hidden">
+                    <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                      <Image
+                        src={getAssetPath(project.image)}
+                        alt={project.title}
+                        layout="fill"
+                        objectFit="cover"
+                        className="object-cover"
+                      />
                     </div>
                   </div>
                   <CardHeader className="pb-2">
