@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 interface TypingAnimationProps {
   text: string
@@ -31,7 +31,7 @@ export default function TypingAnimation({
   }, [])
 
   // Function to get variable typing speed with quintic ease-in timing
-  const getTypingSpeed = (char: string, index: number) => {
+  const getTypingSpeed = useCallback((char: string, index: number) => {
     // Return consistent speed during SSR
     if (!isMounted) return speed
 
@@ -54,7 +54,7 @@ export default function TypingAnimation({
     const finalMultiplier = baseSpeedMultiplier * characterMultiplier * (1 + variation)
 
     return Math.max(speed * finalMultiplier, 10) // Ensure minimum speed
-  }
+  }, [isMounted, speed, text.length, randomSeed])
 
   useEffect(() => {
     if (!isMounted) return
@@ -85,7 +85,7 @@ export default function TypingAnimation({
     } else if (currentIndex === text.length && onComplete) {
       onComplete()
     }
-  }, [currentIndex, text, speed, isTyping, onComplete, isMounted])
+  }, [currentIndex, text, speed, isTyping, onComplete, isMounted, getTypingSpeed])
 
   // Render placeholder during SSR with the same structure
   if (!isMounted) {

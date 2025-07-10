@@ -23,46 +23,19 @@ const projects = [
     description: 'Code to define your units. Gather, build, and conquer in this multiplayer strategy game where you can create your own units and battle against others.',
     image: '/projects/network.png',
     technologies: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Material-UI'],
-    liveUrl: '#',
-    githubUrl: '#',
+    liveUrl: 'https://network-the-game.vercel.app/',
+    githubUrl: null,
     featured: true
   },
   {
-    title: 'Unfired Studio',
+    title: 'Unfired Studio Official Website',
     description: 'A creative studio website showcasing portfolio, lessons, and resources, with a modern design and smooth animations.',
     image: '/projects/unfired-studio.png',
     technologies: ['Vue.js', 'OpenWeather API', 'Chart.js', 'SCSS'],
-    liveUrl: '#',
-    githubUrl: '#',
+    liveUrl: 'https://unfiredstudio.com/',
+    githubUrl: null,
     featured: false
   },
-  {
-    title: 'Portfolio Website',
-    description: 'Modern, responsive portfolio website with smooth animations and dark mode support.',
-    image: '/api/placeholder/600/400',
-    technologies: ['Next.js', 'Framer Motion', 'Tailwind CSS', 'MDX'],
-    liveUrl: '#',
-    githubUrl: '#',
-    featured: false
-  },
-  {
-    title: 'Social Media Dashboard',
-    description: 'Analytics dashboard for social media management with data visualization and scheduling features.',
-    image: '/api/placeholder/600/400',
-    technologies: ['React', 'D3.js', 'Express.js', 'Redis', 'PostgreSQL'],
-    liveUrl: '#',
-    githubUrl: '#',
-    featured: false
-  },
-  {
-    title: 'Learning Management System',
-    description: 'Educational platform with course creation, progress tracking, and interactive learning modules.',
-    image: '/api/placeholder/600/400',
-    technologies: ['Next.js', 'Prisma', 'Supabase', 'Stripe', 'Tailwind CSS'],
-    liveUrl: '#',
-    githubUrl: '#',
-    featured: false
-  }
 ]
 
 export default function Projects() {
@@ -97,12 +70,14 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
+              className="cursor-pointer hover:scale-105 transition-transform duration-300"
+              onClick={() => window.open(project.liveUrl, '_blank')}
             >
               <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
                 <div className="relative h-48 overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                     <Image
-                      src={getAssetPath(project.image)}
+                      src={project.image}
                       alt={project.title}
                       layout="fill"
                       objectFit="cover"
@@ -127,18 +102,29 @@ export default function Projects() {
                     ))}
                   </div>
                   <div className="flex gap-3">
-                    <Button asChild size="sm">
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Live Demo
-                      </a>
+                    <Button 
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(project.liveUrl, '_blank');
+                      }}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Live Demo
                     </Button>
                     {project.githubUrl && (
-                      <Button asChild variant="outline" size="sm">
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                          <Github className="w-4 h-4 mr-2" />
-                          Code
-                        </a>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (project.githubUrl) {
+                            window.open(project.githubUrl, '_blank');
+                          }
+                        }}
+                      >
+                        <Github className="w-4 h-4 mr-2" />
+                        Code
                       </Button>
                     )}
                   </div>
@@ -167,6 +153,8 @@ export default function Projects() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
+                className="cursor-pointer hover:scale-105 transition-transform duration-300"
+                onClick={() => window.open(project.liveUrl, '_blank')}
               >
                 <Card className="hover:shadow-lg transition-all duration-300 h-full">
                   <div className="relative h-48 overflow-hidden">
@@ -202,16 +190,30 @@ export default function Projects() {
                       )}
                     </div>
                     <div className="flex gap-2">
-                      <Button asChild size="sm" variant="ghost" className="p-2">
-                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="w-4 h-4" />
-                        </a>
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        className="p-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(project.liveUrl, '_blank');
+                        }}
+                      >
+                        <ExternalLink className="w-4 h-4" />
                       </Button>
                       {project.githubUrl && (
-                        <Button asChild size="sm" variant="ghost" className="p-2">
-                          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                            <Github className="w-4 h-4" />
-                          </a>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="p-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (project.githubUrl) {
+                              window.open(project.githubUrl, '_blank');
+                            }
+                          }}
+                        >
+                          <Github className="w-4 h-4" />
                         </Button>
                       )}
                     </div>

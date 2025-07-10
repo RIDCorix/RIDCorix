@@ -84,9 +84,6 @@ export default function TransformationAnimation() {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Digital Transformation
           </h2>
-          <p className="text-lg text-blue-200 max-w-3xl mx-auto mb-8">
-            Watch how I transform outdated systems into modern, beautiful digital experiences
-          </p>
           
           {/* Progress Bar */}
           <div className="max-w-2xl mx-auto">

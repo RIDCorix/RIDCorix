@@ -105,12 +105,16 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
           >
-            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer">
-              View My Work
-            </Button>
-            <Button variant="outline" size="lg" className="cursor-pointer">
-              Get In Touch
-            </Button>
+            <a href="#projects">
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer">
+                View My Work
+              </Button>
+            </a>
+            <a href="#contact">
+              <Button variant="outline" size="lg" className="cursor-pointer">
+                Get In Touch
+              </Button>
+            </a>
           </motion.div>
 
           <motion.div
@@ -120,7 +124,8 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.9 }}
           >
             <motion.a
-              href="#"
+              href="https://github.com/RIDCorix"
+              target='_blank'
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
@@ -128,7 +133,8 @@ export default function Hero() {
               <Github size={24} />
             </motion.a>
             <motion.a
-              href="#"
+              href="https://www.linkedin.com/in/ray-yang-84b071276/"
+              target='_blank'
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
@@ -136,7 +142,7 @@ export default function Hero() {
               <Linkedin size={24} />
             </motion.a>
             <motion.a
-              href="#"
+              href="mailto:ridcorix@gmail.com"
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
@@ -152,7 +158,18 @@ export default function Hero() {
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <ArrowDown className="text-gray-400" size={32} />
+        <motion.a
+          href="#about"
+          className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors duration-300"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <ArrowDown size={32} />
+        </motion.a>
       </motion.div>
     </section>
   )

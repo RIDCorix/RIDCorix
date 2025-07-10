@@ -16,6 +16,8 @@ export default function Contact() {
     subject: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -24,12 +26,45 @@ export default function Contact() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
-    // Reset form
-    setFormData({ name: '', email: '', subject: '', message: '' })
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    try {
+      // Replace this URL with your Google Apps Script web app URL
+      const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/1wH8OkEhOS6m_AK7eHJHpgGaG20QSMFNAZ0ANoBRzaceX3-IfmEYEnvn3/exec'
+      
+      await fetch(GOOGLE_APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Required for Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          timestamp: new Date().toISOString(),
+          source: 'Portfolio Website'
+        })
+      })
+
+      // Since we're using no-cors mode, we can't read the response
+      // We'll assume success if no error is thrown
+      setSubmitStatus('success')
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      
+      // Show success message for 3 seconds
+      setTimeout(() => setSubmitStatus('idle'), 3000)
+      
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitStatus('error')
+      
+      // Show error message for 3 seconds
+      setTimeout(() => setSubmitStatus('idle'), 3000)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -81,7 +116,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Email</h4>
-                  <p className="text-gray-600 dark:text-gray-300">ray@example.com</p>
+                  <p className="text-gray-600 dark:text-gray-300">ridcorix@gmail.com</p>
                 </div>
               </motion.div>
 
@@ -95,7 +130,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Phone</h4>
-                  <p className="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
+                  <p className="text-gray-600 dark:text-gray-300">+886 966188001</p>
                 </div>
               </motion.div>
 
@@ -109,7 +144,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Location</h4>
-                  <p className="text-gray-600 dark:text-gray-300">San Francisco, CA</p>
+                  <p className="text-gray-600 dark:text-gray-300">Taipei, Taiwan</p>
                 </div>
               </motion.div>
             </div>
@@ -205,11 +240,49 @@ export default function Contact() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                    <Button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className={`w-full transition-all duration-300 ${
+                        submitStatus === 'success' 
+                          ? 'bg-green-600 hover:bg-green-700' 
+                          : submitStatus === 'error'
+                          ? 'bg-red-600 hover:bg-red-700'
+                          : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
+                      }`}
+                    >
                       <Send className="w-4 h-4 mr-2" />
-                      Send Message
+                      {isSubmitting 
+                        ? 'Sending...' 
+                        : submitStatus === 'success'
+                        ? 'Message Sent!'
+                        : submitStatus === 'error'
+                        ? 'Error - Try Again'
+                        : 'Send Message'
+                      }
                     </Button>
                   </motion.div>
+
+                  {/* Status Messages */}
+                  {submitStatus === 'success' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-green-600 dark:text-green-400 text-sm text-center"
+                    >
+                      ✅ Thank you! Your message has been sent successfully.
+                    </motion.div>
+                  )}
+                  
+                  {submitStatus === 'error' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-600 dark:text-red-400 text-sm text-center"
+                    >
+                      ❌ Sorry, there was an error sending your message. Please try again.
+                    </motion.div>
+                  )}
                 </form>
               </CardContent>
             </Card>
