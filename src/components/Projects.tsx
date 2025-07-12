@@ -13,7 +13,7 @@ const projects = [
     title: 'Skellar',
     description: 'A skill tree platform for both online courses and in-person workshops, designed to help users track their learning progress and achievements.',
     image: '/projects/skellar.png',
-    technologies: ['Next.js', 'TypeScript', 'Stripe', 'PostgreSQL', 'Tailwind CSS'],
+    technologies: ['Next.js', 'Django', 'Stripe', 'PostgreSQL', 'Tailwind CSS', 'Django', 'Amazon SQS', 'Redis'],
     liveUrl: 'https://skellar-mvp-frontend.vercel.app/',
     githubUrl: null,
     featured: true
@@ -22,7 +22,7 @@ const projects = [
     title: 'Network The Game',
     description: 'Code to define your units. Gather, build, and conquer in this multiplayer strategy game where you can create your own units and battle against others.',
     image: '/projects/network.png',
-    technologies: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Material-UI'],
+    technologies: ['Vite', 'Node.js', 'Monaco Editor', 'Shadcn UI', 'Material-UI'],
     liveUrl: 'https://network-the-game.vercel.app/',
     githubUrl: null,
     featured: true
@@ -31,7 +31,7 @@ const projects = [
     title: 'Unfired Studio Official Website',
     description: 'A creative studio website showcasing portfolio, lessons, and resources, with a modern design and smooth animations.',
     image: '/projects/unfired-studio.png',
-    technologies: ['Vue.js', 'OpenWeather API', 'Chart.js', 'SCSS'],
+    technologies: ['Next.js', 'Apps Script', 'Framer Motion', 'Tailwind CSS'],
     liveUrl: 'https://unfiredstudio.com/',
     githubUrl: null,
     featured: false

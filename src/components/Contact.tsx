@@ -33,7 +33,7 @@ export default function Contact() {
 
     try {
       // Replace this URL with your Google Apps Script web app URL
-      const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/1wH8OkEhOS6m_AK7eHJHpgGaG20QSMFNAZ0ANoBRzaceX3-IfmEYEnvn3/exec'
+      const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxqUXmEcQeOmQiEgDJZfsH5Gky-mWCpRdxvETOSDNBoMXrlqR2MK25zbi0BFR0m_Q/exec'
       
       await fetch(GOOGLE_APPS_SCRIPT_URL, {
         method: 'POST',

@@ -26,7 +26,7 @@ export default function Footer() {
               </p>
               <HydrationSafeDiv className="flex space-x-4">
                 <motion.a
-                  href="#"
+                  href="https://github.com/RIDCorix"
                   className="text-gray-400 hover:text-white transition-colors"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -34,7 +34,7 @@ export default function Footer() {
                   <Github size={20} />
                 </motion.a>
                 <motion.a
-                  href="#"
+                  href="https://www.linkedin.com/in/ray-yang-84b071276/"
                   className="text-gray-400 hover:text-white transition-colors"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -42,7 +42,7 @@ export default function Footer() {
                   <Linkedin size={20} />
                 </motion.a>
                 <motion.a
-                  href="#"
+                  href="mailto:ridcorix@gmail.com"
                   className="text-gray-400 hover:text-white transition-colors"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -101,10 +101,7 @@ export default function Footer() {
                   <span className="text-gray-400">Web Development</span>
                 </li>
                 <li>
-                  <span className="text-gray-400">Mobile Apps</span>
-                </li>
-                <li>
-                  <span className="text-gray-400">UI/UX Design</span>
+                  <span className="text-gray-400">Architecture Designing</span>
                 </li>
                 <li>
                   <span className="text-gray-400">Consulting</span>
