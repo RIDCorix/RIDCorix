@@ -17,7 +17,6 @@ export default function Home() {
       <Aspects />
       <TransformationAnimation />
       <Projects />
-      <Articles />
       <Contact />
       <Footer />
     </div>
