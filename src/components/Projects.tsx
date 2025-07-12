@@ -77,7 +77,7 @@ export default function Projects() {
                 <div className="relative h-48 overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                     <Image
-                      src={project.image}
+                      src={getAssetPath(project.image)}
                       alt={project.title}
                       layout="fill"
                       objectFit="cover"
