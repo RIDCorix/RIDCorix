@@ -2,16 +2,17 @@
 
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, Heart } from 'lucide-react'
+import HydrationSafeDiv from './HydrationSafeDiv'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
     <footer className="bg-gray-900 text-white py-12">
-      <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+      <HydrationSafeDiv className="container mx-auto px-6">
+        <HydrationSafeDiv className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
-          <div>
+          <HydrationSafeDiv>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -23,9 +24,9 @@ export default function Footer() {
                 Full-Stack Developer passionate about creating beautiful, 
                 functional digital experiences.
               </p>
-              <div className="flex space-x-4">
+              <HydrationSafeDiv className="flex space-x-4">
                 <motion.a
-                  href="#"
+                  href="https://github.com/RIDCorix"
                   className="text-gray-400 hover:text-white transition-colors"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -33,7 +34,7 @@ export default function Footer() {
                   <Github size={20} />
                 </motion.a>
                 <motion.a
-                  href="#"
+                  href="https://www.linkedin.com/in/ray-yang-84b071276/"
                   className="text-gray-400 hover:text-white transition-colors"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -41,19 +42,19 @@ export default function Footer() {
                   <Linkedin size={20} />
                 </motion.a>
                 <motion.a
-                  href="#"
+                  href="mailto:ridcorix@gmail.com"
                   className="text-gray-400 hover:text-white transition-colors"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
                 >
                   <Mail size={20} />
                 </motion.a>
-              </div>
+              </HydrationSafeDiv>
             </motion.div>
-          </div>
+          </HydrationSafeDiv>
 
           {/* Quick Links */}
-          <div>
+          <HydrationSafeDiv>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -84,10 +85,10 @@ export default function Footer() {
                 </li>
               </ul>
             </motion.div>
-          </div>
+          </HydrationSafeDiv>
 
           {/* Services */}
-          <div>
+          <HydrationSafeDiv>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -100,18 +101,15 @@ export default function Footer() {
                   <span className="text-gray-400">Web Development</span>
                 </li>
                 <li>
-                  <span className="text-gray-400">Mobile Apps</span>
-                </li>
-                <li>
-                  <span className="text-gray-400">UI/UX Design</span>
+                  <span className="text-gray-400">Architecture Designing</span>
                 </li>
                 <li>
                   <span className="text-gray-400">Consulting</span>
                 </li>
               </ul>
             </motion.div>
-          </div>
-        </div>
+          </HydrationSafeDiv>
+        </HydrationSafeDiv>
 
         {/* Bottom Bar */}
         <motion.div
@@ -121,18 +119,18 @@ export default function Footer() {
           viewport={{ once: true }}
           className="border-t border-gray-800 pt-8"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <HydrationSafeDiv className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
               © {currentYear} Ray. All rights reserved.
             </p>
-            <div className="flex items-center text-gray-400 text-sm">
+            <HydrationSafeDiv className="flex items-center text-gray-400 text-sm">
               <span>Made with</span>
               <Heart className="w-4 h-4 mx-1 text-red-500" fill="currentColor" />
               <span>using Next.js & Tailwind CSS</span>
-            </div>
-          </div>
+            </HydrationSafeDiv>
+          </HydrationSafeDiv>
         </motion.div>
-      </div>
+      </HydrationSafeDiv>
     </footer>
   )
 }

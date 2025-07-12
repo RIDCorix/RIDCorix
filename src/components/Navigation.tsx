@@ -10,6 +10,7 @@ const navItems = [
   { name: 'Home', href: '#' },
   { name: 'About', href: '#about' },
   { name: 'Projects', href: '#projects' },
+  { name: 'Articles', href: '#articles' },
   { name: 'Contact', href: '#contact' },
 ]
 
@@ -40,6 +41,11 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
+      style={{
+        // Ensure navigation works at all zoom levels
+        minWidth: '100%',
+        transform: 'translate3d(0, 0, 0)', // Force hardware acceleration
+      }}
     >
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">

@@ -66,7 +66,14 @@ export default function TransformationAnimation() {
 
   return (
     <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-hidden relative">
-      <div className="container mx-auto px-6">
+      <div 
+        className="container mx-auto px-6"
+        style={{
+          // Ensure proper interaction at all zoom levels
+          minWidth: 0,
+          maxWidth: '100%',
+        }}
+      >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -77,9 +84,6 @@ export default function TransformationAnimation() {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Digital Transformation
           </h2>
-          <p className="text-lg text-blue-200 max-w-3xl mx-auto mb-8">
-            Watch how I transform outdated systems into modern, beautiful digital experiences
-          </p>
           
           {/* Progress Bar */}
           <div className="max-w-2xl mx-auto">

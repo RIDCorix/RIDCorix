@@ -6,7 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "./scripts/deploy.sh",
+    "deploy:serve": "./scripts/deploy.sh --serve",
+    "pre-deploy": "./scripts/pre-deploy-check.sh",
+    "verify-deployment": "./scripts/verify-deployment.sh",
+    "full-deploy": "npm run pre-deploy && npm run deploy"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
@@ -20,6 +25,10 @@
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
+    "rehype-highlight": "^7.0.2",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

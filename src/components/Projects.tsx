@@ -6,62 +6,36 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ExternalLink, Github } from 'lucide-react'
 import Image from 'next/image'
+import { getAssetPath } from '@/lib/utils'
 
 const projects = [
   {
     title: 'Skellar',
     description: 'A skill tree platform for both online courses and in-person workshops, designed to help users track their learning progress and achievements.',
-    image: '/api/placeholder/600/400',
-    technologies: ['Next.js', 'TypeScript', 'Stripe', 'PostgreSQL', 'Tailwind CSS'],
+    image: '/projects/skellar.png',
+    technologies: ['Next.js', 'Django', 'Stripe', 'PostgreSQL', 'Tailwind CSS', 'Django', 'Amazon SQS', 'Redis'],
     liveUrl: 'https://skellar-mvp-frontend.vercel.app/',
     githubUrl: null,
     featured: true
   },
   {
-    title: 'Task Management App',
-    description: 'Collaborative project management tool with real-time updates, file sharing, and team communication features.',
-    image: '/api/placeholder/600/400',
-    technologies: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Material-UI'],
-    liveUrl: '#',
-    githubUrl: '#',
+    title: 'Network The Game',
+    description: 'Code to define your units. Gather, build, and conquer in this multiplayer strategy game where you can create your own units and battle against others.',
+    image: '/projects/network.png',
+    technologies: ['Vite', 'Node.js', 'Monaco Editor', 'Shadcn UI', 'Material-UI'],
+    liveUrl: 'https://network-the-game.vercel.app/',
+    githubUrl: null,
     featured: true
   },
   {
-    title: 'Weather Dashboard',
-    description: 'Beautiful weather application with location-based forecasts, interactive maps, and weather alerts.',
-    image: '/api/placeholder/600/400',
-    technologies: ['Vue.js', 'OpenWeather API', 'Chart.js', 'SCSS'],
-    liveUrl: '#',
-    githubUrl: '#',
+    title: 'Unfired Studio Official Website',
+    description: 'A creative studio website showcasing portfolio, lessons, and resources, with a modern design and smooth animations.',
+    image: '/projects/unfired-studio.png',
+    technologies: ['Next.js', 'Apps Script', 'Framer Motion', 'Tailwind CSS'],
+    liveUrl: 'https://unfiredstudio.com/',
+    githubUrl: null,
     featured: false
   },
-  {
-    title: 'Portfolio Website',
-    description: 'Modern, responsive portfolio website with smooth animations and dark mode support.',
-    image: '/api/placeholder/600/400',
-    technologies: ['Next.js', 'Framer Motion', 'Tailwind CSS', 'MDX'],
-    liveUrl: '#',
-    githubUrl: '#',
-    featured: false
-  },
-  {
-    title: 'Social Media Dashboard',
-    description: 'Analytics dashboard for social media management with data visualization and scheduling features.',
-    image: '/api/placeholder/600/400',
-    technologies: ['React', 'D3.js', 'Express.js', 'Redis', 'PostgreSQL'],
-    liveUrl: '#',
-    githubUrl: '#',
-    featured: false
-  },
-  {
-    title: 'Learning Management System',
-    description: 'Educational platform with course creation, progress tracking, and interactive learning modules.',
-    image: '/api/placeholder/600/400',
-    technologies: ['Next.js', 'Prisma', 'Supabase', 'Stripe', 'Tailwind CSS'],
-    liveUrl: '#',
-    githubUrl: '#',
-    featured: false
-  }
 ]
 
 export default function Projects() {
@@ -96,11 +70,19 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
+              className="cursor-pointer hover:scale-105 transition-transform duration-300"
+              onClick={() => window.open(project.liveUrl, '_blank')}
             >
               <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
                 <div className="relative h-48 overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                    <span className="text-white text-lg font-semibold">Project Image</span>
+                    <Image
+                      src={getAssetPath(project.image)}
+                      alt={project.title}
+                      layout="fill"
+                      objectFit="cover"
+                      className="object-cover"
+                    />
                   </div>
                 </div>
                 <CardHeader>
@@ -120,18 +102,31 @@ export default function Projects() {
                     ))}
                   </div>
                   <div className="flex gap-3">
-                    <Button asChild size="sm">
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Live Demo
-                      </a>
+                    <Button 
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(project.liveUrl, '_blank');
+                      }}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Live Demo
                     </Button>
-                    <Button asChild variant="outline" size="sm">
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                    {project.githubUrl && (
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (project.githubUrl) {
+                            window.open(project.githubUrl, '_blank');
+                          }
+                        }}
+                      >
                         <Github className="w-4 h-4 mr-2" />
                         Code
-                      </a>
-                    </Button>
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -158,11 +153,19 @@ export default function Projects() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
+                className="cursor-pointer hover:scale-105 transition-transform duration-300"
+                onClick={() => window.open(project.liveUrl, '_blank')}
               >
                 <Card className="hover:shadow-lg transition-all duration-300 h-full">
-                  <div className="relative h-32 overflow-hidden">
-                    <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
-                      <span className="text-white text-sm">Project Image</span>
+                  <div className="relative h-48 overflow-hidden">
+                    <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                      <Image
+                        src={getAssetPath(project.image)}
+                        alt={project.title}
+                        layout="fill"
+                        objectFit="cover"
+                        className="object-cover"
+                      />
                     </div>
                   </div>
                   <CardHeader className="pb-2">
@@ -187,16 +190,32 @@ export default function Projects() {
                       )}
                     </div>
                     <div className="flex gap-2">
-                      <Button asChild size="sm" variant="ghost" className="p-2">
-                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="w-4 h-4" />
-                        </a>
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        className="p-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(project.liveUrl, '_blank');
+                        }}
+                      >
+                        <ExternalLink className="w-4 h-4" />
                       </Button>
-                      <Button asChild size="sm" variant="ghost" className="p-2">
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                      {project.githubUrl && (
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="p-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (project.githubUrl) {
+                              window.open(project.githubUrl, '_blank');
+                            }
+                          }}
+                        >
                           <Github className="w-4 h-4" />
-                        </a>
-                      </Button>
+                        </Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

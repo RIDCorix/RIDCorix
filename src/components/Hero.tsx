@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
 import Image from 'next/image'
+import TypingAnimation from './TypingAnimation'
+import { getAssetPath } from '@/lib/utils'
 
 export default function Hero() {
   return (
@@ -35,7 +37,7 @@ export default function Hero() {
             >
               <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-800">
                 <Image
-                  src="/avatar.png"
+                  src={getAssetPath('/avatar.png')}
                   alt="Ray's Avatar"
                   width={128}
                   height={128}
@@ -52,7 +54,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Hi, I'm{' '}
+            Hi, I&apos;m{' '}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Ray
             </span>
@@ -69,27 +71,61 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
+            className="mb-8 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg blur-xl"></div>
+              <blockquote className="font-mono relative bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-blue-200/30 dark:border-blue-400/30 rounded-lg p-6 text-center">
+                <div className="inline-block text-4xl text-blue-500/30 dark:text-blue-400/30 mb-2">&ldquo;</div>
+                <p className="inline-block text-lg md:text-xl font-medium text-gray-700 dark:text-gray-300 italic min-h-[1.5em] flex items-center justify-center">
+                  <TypingAnimation 
+                    text="Just gamble"
+                    speed={40}
+                    delay={1000}
+                    className="inline-block"
+                  /><TypingAnimation 
+                    text=", if you prepared to lose it all."
+                    speed={100}
+                    delay={3000}
+                    className="inline-block"
+                  />
+                </p>
+                <div className="inline-block text-4xl text-blue-500/30 dark:text-blue-400/30 mt-2">&rdquo;</div>
+                <cite className="block text-sm text-gray-500 dark:text-gray-400 font-medium not-italic">— My Motto</cite>
+              </blockquote>
+            </div>
+          </motion.div>
+
+          <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
           >
-            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-              View My Work
-            </Button>
-            <Button variant="outline" size="lg">
-              Get In Touch
-            </Button>
+            <a href="#projects">
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer">
+                View My Work
+              </Button>
+            </a>
+            <a href="#contact">
+              <Button variant="outline" size="lg" className="cursor-pointer">
+                Get In Touch
+              </Button>
+            </a>
           </motion.div>
 
           <motion.div
             className="flex justify-center space-x-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
           >
             <motion.a
-              href="#"
+              href="https://github.com/RIDCorix"
+              target='_blank'
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
@@ -97,7 +133,8 @@ export default function Hero() {
               <Github size={24} />
             </motion.a>
             <motion.a
-              href="#"
+              href="https://www.linkedin.com/in/ray-yang-84b071276/"
+              target='_blank'
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
@@ -105,7 +142,7 @@ export default function Hero() {
               <Linkedin size={24} />
             </motion.a>
             <motion.a
-              href="#"
+              href="mailto:ridcorix@gmail.com"
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
@@ -121,7 +158,18 @@ export default function Hero() {
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <ArrowDown className="text-gray-400" size={32} />
+        <motion.a
+          href="#about"
+          className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors duration-300"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <ArrowDown size={32} />
+        </motion.a>
       </motion.div>
     </section>
   )
