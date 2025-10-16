@@ -56,9 +56,16 @@ export default function TypingAnimation({
     return Math.max(speed * finalMultiplier, 10) // Ensure minimum speed
   }, [isMounted, speed, text.length, randomSeed])
 
+  // Reset animation when text changes
   useEffect(() => {
     if (!isMounted) return
     
+    // Reset all state when text changes
+    setDisplayedText('')
+    setCurrentIndex(0)
+    setIsTyping(false)
+    
+    // Start typing after delay
     if (delay > 0) {
       const delayTimer = setTimeout(() => {
         setIsTyping(true)
@@ -67,7 +74,7 @@ export default function TypingAnimation({
     } else {
       setIsTyping(true)
     }
-  }, [delay, isMounted])
+  }, [text, delay, isMounted]) // Add text as dependency
 
   useEffect(() => {
     if (!isTyping || !isMounted) return

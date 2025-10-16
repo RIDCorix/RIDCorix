@@ -20,7 +20,7 @@ export default function ArticlesPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white">
+      <div className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
         <div className="container mx-auto px-6 py-20">
           <div className="max-w-3xl">
             <h1 className="text-5xl font-bold mb-6">Articles</h1>
@@ -162,7 +162,7 @@ export default function ArticlesPage() {
         </section>
 
         {/* Newsletter Signup */}
-        <section className="mt-20 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8 text-center">
+        <section className="mt-20 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-2xl p-8 text-center">
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Stay Updated
           </h3>

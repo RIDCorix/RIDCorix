@@ -2,7 +2,7 @@
 
 import { motion, useAnimation } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { Zap, Code, Palette, Sparkles } from 'lucide-react'
+import { Zap, Code, Palette, Settings } from 'lucide-react'
 
 export default function TransformationAnimation() {
   const [isTransforming, setIsTransforming] = useState(false)
@@ -17,12 +17,12 @@ export default function TransformationAnimation() {
       setProgress(0)
       
       // Wait a bit then start transformation
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise(resolve => setTimeout(resolve, 1500))
       setIsTransforming(true)
       
-      // Animate progress bar and steps
-      const stepDuration = 1000 // 1 second per step
-      const totalDuration = 3000 // 3 seconds total
+      // Animate progress bar and steps - slower, more premium timing
+      const stepDuration = 1200 // 1.2 seconds per step
+      const totalDuration = 4000 // 4 seconds total
       
       // Progress bar animation
       const progressInterval = setInterval(() => {
@@ -42,10 +42,10 @@ export default function TransformationAnimation() {
         }, i * stepDuration + 300)
       }
       
-      // Start circuit animation
+      // Start circuit animation - slower, more elegant
       await controls.start({
         pathLength: 1,
-        transition: { duration: 1.5, ease: "easeInOut" }
+        transition: { duration: 2.2, ease: "easeInOut" }
       })
       
       // Reset after animation completes
@@ -59,8 +59,8 @@ export default function TransformationAnimation() {
 
     sequence()
     
-    // Repeat animation every 6 seconds
-    const interval = setInterval(sequence, 6000)
+    // Repeat animation every 8 seconds for more premium feel
+    const interval = setInterval(sequence, 8000)
     return () => clearInterval(interval)
   }, [controls])
 
@@ -93,19 +93,20 @@ export default function TransformationAnimation() {
             </div>
             <div className="w-full bg-gray-700/50 rounded-full h-3 overflow-hidden backdrop-blur-sm border border-blue-500/20">
               <motion.div
-                className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-green-400 rounded-full relative overflow-hidden"
+                className="h-full bg-gradient-to-r from-blue-600 via-cyan-500 to-slate-600 rounded-full relative overflow-hidden"
                 initial={{ width: "0%" }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                {/* Shimmer effect */}
+                {/* Subtle shimmer effect */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
                   animate={{ x: ["-100%", "100%"] }}
                   transition={{ 
-                    duration: 1.5, 
+                    duration: 2.5, 
                     repeat: Infinity, 
-                    ease: "easeInOut" 
+                    ease: "easeInOut",
+                    repeatDelay: 1
                   }}
                 />
               </motion.div>
@@ -233,14 +234,14 @@ export default function TransformationAnimation() {
               {/* Old System - Base layer */}
               <div className="bg-gray-800 border border-gray-700 rounded-lg p-6 relative overflow-hidden shadow-inner">
                 {/* Static noise overlay */}
-                <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-gray-600 via-transparent to-gray-600 animate-pulse"></div>
+                <div className="absolute inset-0 opacity-5 bg-gradient-to-br from-gray-600 via-transparent to-gray-600"></div>
                 
                 {/* Scanlines effect */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-500/5 to-transparent bg-[length:100%_4px] animate-pulse"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-500/3 to-transparent bg-[length:100%_4px]"></div>
                 
                 <div className="text-red-400 mb-4 relative z-10">
                   <div className="flex items-center space-x-2 mb-2">
-                    <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-red-500 rounded-full opacity-80"></div>
                     <span className="text-sm font-mono tracking-wider">LEGACY SYSTEM v1.2.3</span>
                     <div className="text-xs text-red-300 ml-2 font-mono">[DEPRECATED]</div>
                   </div>
@@ -252,15 +253,15 @@ export default function TransformationAnimation() {
                 <div className="space-y-3 relative z-10">
                   {/* Glitchy loading bars */}
                   <div className="bg-gray-700 h-8 rounded relative overflow-hidden">
-                    <div className="absolute inset-0 bg-red-900/20 animate-pulse"></div>
+                    <div className="absolute inset-0 bg-red-900/10"></div>
                     <div className="absolute left-2 top-2 text-xs text-gray-400 font-mono">Loading...</div>
-                    <div className="absolute right-2 top-2 text-xs text-red-400 font-mono animate-pulse">ERROR</div>
+                    <div className="absolute right-2 top-2 text-xs text-red-400 font-mono opacity-80">ERROR</div>
                   </div>
                   
                   {/* Broken progress indicators */}
                   <div className="flex space-x-2">
                     <div className="bg-gray-700 h-4 rounded w-1/2 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-yellow-900/30 animate-pulse"></div>
+                      <div className="absolute inset-0 bg-yellow-900/20"></div>
                       <div className="w-1/3 h-full bg-yellow-600/50"></div>
                     </div>
                     <div className="bg-gray-700 h-4 rounded w-1/4 relative">
@@ -274,19 +275,19 @@ export default function TransformationAnimation() {
                     <div className="bg-gray-600 h-16 rounded border border-gray-500 relative">
                       <div className="absolute inset-1 bg-gray-700 rounded border-2 border-gray-500 border-t-gray-400 border-l-gray-400"></div>
                       <div className="absolute top-2 left-2 text-xs text-gray-400 font-mono">Module A</div>
-                      <div className="absolute bottom-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                      <div className="absolute bottom-1 right-1 w-2 h-2 bg-red-500 rounded-full opacity-70"></div>
                     </div>
                     <div className="bg-gray-600 h-16 rounded border border-gray-500 relative">
                       <div className="absolute inset-1 bg-gray-700 rounded border-2 border-gray-500 border-t-gray-400 border-l-gray-400"></div>
                       <div className="absolute top-2 left-2 text-xs text-gray-400 font-mono">Module B</div>
-                      <div className="absolute bottom-1 right-1 w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+                      <div className="absolute bottom-1 right-1 w-2 h-2 bg-yellow-500 rounded-full opacity-70"></div>
                     </div>
                   </div>
                   
                   {/* Terminal-style error messages */}
                   <div className="bg-black/50 rounded p-2 font-mono text-xs border border-gray-600">
                     <div className="text-green-400">C:\legacy_system&gt;</div>
-                    <div className="text-red-400 animate-pulse">WARN: Memory leak detected in module A</div>
+                    <div className="text-red-400 opacity-80">WARN: Memory leak detected in module A</div>
                     <div className="text-yellow-400">INFO: Attempting reconnection...</div>
                     <div className="text-red-400">ERROR: Connection timeout (30s)</div>
                     <div className="text-gray-500">Last login: Mon Mar 14 09:32:15 2015</div>
@@ -295,17 +296,17 @@ export default function TransformationAnimation() {
                 
                 <div className="text-xs text-gray-400 mt-4 font-mono relative z-10 flex items-center justify-between">
                   <span className="flex items-center space-x-2">
-                    <span className="animate-pulse">⚠️ Outdated</span>
+                    <span className="text-yellow-500">OUTDATED</span>
                     <span>•</span>
-                    <span className="animate-pulse">🐌 Slow</span>
+                    <span className="text-orange-500">PERFORMANCE ISSUES</span>
                     <span>•</span>
-                    <span>🔧 Hard to maintain</span>
+                    <span className="text-red-500">MAINTENANCE OVERHEAD</span>
                   </span>
-                  <span className="text-red-400 animate-pulse">NEEDS UPGRADE</span>
+                  <span className="text-red-400 font-bold">SYSTEM UPGRADE REQUIRED</span>
                 </div>
                 
                 {/* Flickering effect for the entire old system */}
-                <div className="absolute inset-0 bg-gray-800/10 animate-pulse opacity-20"></div>
+                <div className="absolute inset-0 bg-gray-800/5 opacity-10"></div>
               </div>
 
               {/* Modern System - Overlay with clip-path animation */}
@@ -346,7 +347,7 @@ export default function TransformationAnimation() {
                     <div className="flex items-center space-x-2">
                       <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                       <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                      <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
                     </div>
                   </div>
                   <div className="text-xs text-gray-600 dark:text-gray-300 font-medium">
@@ -398,7 +399,7 @@ export default function TransformationAnimation() {
                     <div className="bg-white/90 dark:bg-gray-800/90 p-2 rounded-lg shadow-sm border border-gray-200/50 dark:border-gray-700/50">
                       <div className="text-xs text-gray-500 dark:text-gray-400">Conversion</div>
                       <div className="text-sm font-bold text-gray-800 dark:text-white">3.24%</div>
-                      <div className="text-xs text-purple-600 dark:text-purple-400">+2%</div>
+                      <div className="text-xs text-cyan-500 dark:text-cyan-400">+2%</div>
                     </div>
                   </div>
                   
@@ -408,10 +409,10 @@ export default function TransformationAnimation() {
                       <div className="text-sm font-medium text-gray-800 dark:text-white">Performance Overview</div>
                       <div className="text-xs text-gray-500 dark:text-gray-400">Last 7 days</div>
                     </div>
-                    <div className="h-12 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 to-purple-900/20 rounded relative overflow-hidden">
+                    <div className="h-12 bg-gradient-to-r from-blue-100 to-cyan-100 dark:from-blue-900/20 to-cyan-900/20 rounded relative overflow-hidden">
                       <div className="absolute bottom-0 left-0 w-full h-8 bg-gradient-to-t from-blue-500/20 to-transparent"></div>
                       <div className="absolute bottom-0 left-1/4 w-1 h-6 bg-blue-500 rounded-full"></div>
-                      <div className="absolute bottom-0 left-2/4 w-1 h-8 bg-purple-500 rounded-full"></div>
+                      <div className="absolute bottom-0 left-2/4 w-1 h-8 bg-cyan-500 rounded-full"></div>
                       <div className="absolute bottom-0 left-3/4 w-1 h-4 bg-green-500 rounded-full"></div>
                     </div>
                   </div>
@@ -453,7 +454,7 @@ export default function TransformationAnimation() {
                       {/* Table Row 3 */}
                       <div className="flex items-center justify-between p-2 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
                         <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                          <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
                           <div className="text-xs text-gray-800 dark:text-white font-medium">Mike Chen</div>
                         </div>
                         <div className="flex items-center space-x-2">
@@ -492,21 +493,21 @@ export default function TransformationAnimation() {
                 {/* Modern status footer */}
                 <div className="text-xs text-gray-600 dark:text-gray-300 mt-6 font-medium flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <Sparkles className="w-4 h-4 text-emerald-500" />
+                    <Settings className="w-4 h-4 text-emerald-500" />
                     <span>Lightning Fast</span>
                     <span>•</span>
-                    <span>✨ Beautiful</span>
+                    <span>Beautiful</span>
                     <span>•</span>
                     <span>🔒 Secure</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full opacity-80"></div>
                     <span className="text-emerald-600 dark:text-emerald-400 font-semibold">LIVE</span>
                   </div>
                 </div>
                 
                 {/* Subtle glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-cyan-500/5 pointer-events-none"></div>
               </motion.div>
 
             </div>
@@ -523,7 +524,7 @@ export default function TransformationAnimation() {
             } : { scale: 0, rotate: 0, opacity: 0 }}
             transition={{ duration: 2, delay: 1 }}
           >
-            <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-4 rounded-full shadow-2xl">
+            <div className="bg-gradient-to-r from-blue-600 to-cyan-500 p-4 rounded-full shadow-2xl">
               <Zap className="w-8 h-8 text-white" />
             </div>
           </motion.div>
@@ -573,7 +574,7 @@ export default function TransformationAnimation() {
           
           <div className="grid md:grid-cols-3 gap-8 relative">
             {/* Connecting lines between steps */}
-            <div className="hidden md:block absolute top-12 left-1/3 right-1/3 h-0.5 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-green-500/30"></div>
+            <div className="hidden md:block absolute top-12 left-1/3 right-1/3 h-0.5 bg-gradient-to-r from-blue-500/30 via-cyan-500/30 to-slate-500/30"></div>
             
             {[
               {
@@ -588,10 +589,10 @@ export default function TransformationAnimation() {
                 title: "Monitor & Optimize", 
                 description: "Full-stack development with robust monitoring and error tracking systems",
                 technologies: ["Sentry", "K6", "CloudWatch"],
-                color: "from-purple-500 to-pink-500"
+                color: "from-cyan-500 to-slate-700"
               },
               {
-                icon: <Sparkles className="w-8 h-8" />,
+                icon: <Settings className="w-8 h-8" />,
                 title: "Deploy & Scale",
                 description: "Database optimization and cloud deployment for high-performance applications",
                 technologies: ["Kubernetes", "AWS ECS", "Terraform"],
@@ -617,7 +618,7 @@ export default function TransformationAnimation() {
                         isCompleted 
                           ? 'bg-green-500 text-white shadow-lg shadow-green-500/50' 
                           : isActive 
-                            ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/50 animate-pulse' 
+                            ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' 
                             : 'bg-gray-600 text-gray-300'
                       }`}
                       animate={isActive ? { scale: [1, 1.1, 1] } : { scale: 1 }}
@@ -632,7 +633,7 @@ export default function TransformationAnimation() {
                     className={`inline-flex p-6 rounded-full border-2 mb-6 relative overflow-hidden transition-all duration-500 ${
                       isActive || isCompleted
                         ? `bg-gradient-to-r ${step.color} border-white/50 shadow-2xl`
-                        : 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-blue-400/30'
+                        : 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border-cyan-400/30'
                     }`}
                     animate={isActive ? { 
                       boxShadow: [

@@ -54,7 +54,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Article Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white">
+      <div className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
         <div className="container mx-auto px-6 py-16">
           <div className="max-w-4xl mx-auto">
             <Button asChild variant="ghost" className="text-blue-100 hover:text-white hover:bg-white/10 mb-6">
@@ -66,7 +66,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
             
             <div className="flex flex-wrap gap-2 mb-6">
               {article.tags.map((tag) => (
-                <Badge key={tag} variant="secondary" className="bg-white/20 text-white border-white/30">
+                <Badge key={tag} variant="secondary">
                   {tag}
                 </Badge>
               ))}

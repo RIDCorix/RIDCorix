@@ -8,18 +8,25 @@ import { Textarea } from '@/components/ui/textarea'
 import { Mail, Phone, MapPin, Send } from 'lucide-react'
 import { useState } from 'react'
 import HydrationSafeDiv from './HydrationSafeDiv'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export default function Contact() {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    company: '',
+    phone: '',
+    serviceType: '',
+    budget: '',
+    timeline: '',
     subject: '',
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -51,7 +58,7 @@ export default function Contact() {
       // Since we're using no-cors mode, we can't read the response
       // We'll assume success if no error is thrown
       setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
+      setFormData({ name: '', email: '', company: '', phone: '', serviceType: '', budget: '', timeline: '', subject: '', message: '' })
       
       // Show success message for 3 seconds
       setTimeout(() => setSubmitStatus('idle'), 3000)
@@ -70,38 +77,24 @@ export default function Contact() {
   return (
     <section className="py-20 bg-gray-50 dark:bg-gray-900" id="contact">
       <HydrationSafeDiv className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16 scroll-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            Let&apos;s Work Together
+            {t('contact.title')}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Have a project in mind or want to discuss opportunities? 
-            I&apos;d love to hear from you. Let&apos;s create something amazing together!
+            {t('contact.subtitle')}
           </p>
-        </motion.div>
+        </div>
 
         <HydrationSafeDiv className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
+          <div className="space-y-8 scroll-fade-left">
             <div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Get in Touch
+                {t('contact.getInTouch')}
               </h3>
               <p className="text-gray-600 dark:text-gray-300 mb-8">
-                I&apos;m always open to discussing new opportunities, creative projects, 
-                or just having a chat about technology and design. Don&apos;t hesitate to reach out!
+                {t('contact.getInTouchDesc')}
               </p>
             </div>
 
@@ -115,70 +108,65 @@ export default function Contact() {
                   <Mail className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">Email</h4>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">{t('contact.email')}</h4>
                   <p className="text-gray-600 dark:text-gray-300">ridcorix@gmail.com</p>
                 </div>
               </motion.div>
 
               <motion.div
-                className="flex items-center space-x-4"
-                whileHover={{ x: 5 }}
+                whileHover={{ x: 5, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
+                className="flex items-center space-x-4"
               >
                 <div className="flex-shrink-0 w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
                   <Phone className="w-6 h-6 text-green-600 dark:text-green-400" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">Phone</h4>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">{t('contact.phone')}</h4>
                   <p className="text-gray-600 dark:text-gray-300">+886 966188001</p>
                 </div>
               </motion.div>
 
               <motion.div
-                className="flex items-center space-x-4"
-                whileHover={{ x: 5 }}
+                whileHover={{ x: 5, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
+                className="flex items-center space-x-4"
               >
-                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
-                  <MapPin className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                <div className="flex-shrink-0 w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+                  <MapPin className="w-6 h-6 text-slate-600 dark:text-slate-400" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">Location</h4>
-                  <p className="text-gray-600 dark:text-gray-300">Taipei, Taiwan</p>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">{t('contact.location')}</h4>
+                  <p className="text-gray-600 dark:text-gray-300">{t('contact.locationValue')}</p>
                 </div>
               </motion.div>
             </div>
 
             <div className="pt-8">
               <h4 className="font-semibold text-gray-900 dark:text-white mb-4">
-                Response Time
+                {t('contact.responseTime')}
               </h4>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
-                I typically respond to emails within 24 hours during business days. 
-                For urgent matters, feel free to call or send a message on LinkedIn.
+                {t('contact.responseTimeDescription')}
               </p>
             </div>
-          </motion.div>
+          </div>
 
           {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
+          <div className="scroll-fade-right">
             <Card>
               <CardHeader>
                 <CardTitle className="text-xl font-bold text-gray-900 dark:text-white">
-                  Send Message
+                  {t('contact.formTitle')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* 基本資訊 */}
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Name *
+                        {t('contact.form.nameRequired')}
                       </label>
                       <Input
                         id="name"
@@ -187,12 +175,12 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        placeholder="Your name"
+                        placeholder={t('contact.form.namePlaceholder')}
                       />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Email *
+                        {t('contact.form.emailRequired')}
                       </label>
                       <Input
                         id="email"
@@ -206,9 +194,60 @@ export default function Contact() {
                     </div>
                   </div>
 
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {t('contact.form.company')}
+                      </label>
+                      <Input
+                        id="company"
+                        name="company"
+                        type="text"
+                        value={formData.company}
+                        onChange={handleChange}
+                        placeholder={t('contact.form.companyPlaceholder')}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {t('contact.form.phone')}
+                      </label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder={t('contact.form.phonePlaceholder')}
+                      />
+                    </div>
+                  </div>
+
+                  {/* 服務類型 */}
+                  <div>
+                    <label htmlFor="serviceType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      {t('contact.form.serviceTypeRequired')}
+                    </label>
+                    <select
+                      id="serviceType"
+                      name="serviceType"
+                      value={formData.serviceType}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    >
+                      <option value="">{t('contact.form.serviceTypePlaceholder')}</option>
+                      <option value="teaching">{t('contact.form.serviceTypes.teaching')}</option>
+                      <option value="consulting">{t('contact.form.serviceTypes.consulting')}</option>
+                      <option value="development">{t('contact.form.serviceTypes.development')}</option>
+                      <option value="hybrid">{t('contact.form.serviceTypes.hybrid')}</option>
+                      <option value="other">{t('contact.form.serviceTypes.other')}</option>
+                    </select>
+                  </div>
+
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Subject *
+                      {t('contact.form.subject')}
                     </label>
                     <Input
                       id="subject"
@@ -217,13 +256,13 @@ export default function Contact() {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      placeholder="What's this about?"
+                      placeholder={t('contact.form.subjectPlaceholder')}
                     />
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Message *
+                      {t('contact.form.message')}
                     </label>
                     <Textarea
                       id="message"
@@ -231,7 +270,7 @@ export default function Contact() {
                       value={formData.message}
                       onChange={handleChange}
                       required
-                      placeholder="Tell me about your project or idea..."
+                      placeholder={t('contact.form.messagePlaceholder')}
                       rows={6}
                     />
                   </div>
@@ -243,22 +282,22 @@ export default function Contact() {
                     <Button 
                       type="submit" 
                       disabled={isSubmitting}
-                      className={`w-full transition-all duration-300 ${
+                      className={`w-full transition-all duration-300 text-white font-semibold shadow-lg hover:shadow-xl ${
                         submitStatus === 'success' 
                           ? 'bg-green-600 hover:bg-green-700' 
                           : submitStatus === 'error'
                           ? 'bg-red-600 hover:bg-red-700'
-                          : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
+                          : 'bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600'
                       }`}
                     >
                       <Send className="w-4 h-4 mr-2" />
                       {isSubmitting 
-                        ? 'Sending...' 
+                        ? t('contact.form.submitting')
                         : submitStatus === 'success'
-                        ? 'Message Sent!'
+                        ? t('contact.form.success')
                         : submitStatus === 'error'
-                        ? 'Error - Try Again'
-                        : 'Send Message'
+                        ? t('contact.form.error')
+                        : t('contact.form.submit')
                       }
                     </Button>
                   </motion.div>
@@ -270,7 +309,7 @@ export default function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       className="text-green-600 dark:text-green-400 text-sm text-center"
                     >
-                      ✅ Thank you! Your message has been sent successfully.
+                      {t('contact.form.successMessage')}
                     </motion.div>
                   )}
                   
@@ -280,13 +319,13 @@ export default function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       className="text-red-600 dark:text-red-400 text-sm text-center"
                     >
-                      ❌ Sorry, there was an error sending your message. Please try again.
+                      {t('contact.form.errorMessage')}
                     </motion.div>
                   )}
                 </form>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </HydrationSafeDiv>
       </HydrationSafeDiv>
     </section>

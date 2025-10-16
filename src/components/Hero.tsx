@@ -6,10 +6,13 @@ import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
 import Image from 'next/image'
 import TypingAnimation from './TypingAnimation'
 import { getAssetPath } from '@/lib/utils'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export default function Hero() {
+  const { t, language } = useLanguage()
+  
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-100 dark:from-slate-900 dark:via-blue-950 dark:to-cyan-950">
       {/* Background decoration */}
       <motion.div
         className="absolute inset-0 overflow-hidden"
@@ -17,9 +20,9 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
       >
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-400 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-slate-400 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-4000"></div>
       </motion.div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -31,7 +34,7 @@ export default function Hero() {
             className="mb-8"
           >
             <motion.div
-              className="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 p-1"
+              className="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 p-1"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -54,20 +57,19 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Hi, I&apos;m{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Ray
+            {t('hero.title')}{' '}
+            <span className="bg-gradient-to-r from-blue-600 to-cyan-400 bg-clip-text text-transparent">
+              {t('hero.titleHighlight')}
             </span>
           </motion.h1>
 
           <motion.p
-            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto"
+            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Full-Stack Developer & Designer passionate about creating beautiful, 
-            functional digital experiences that make a difference.
+            {t('hero.subtitle')}
           </motion.p>
 
           <motion.div
@@ -77,24 +79,26 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.5 }}
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg blur-xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-lg blur-xl"></div>
               <blockquote className="font-mono relative bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-blue-200/30 dark:border-blue-400/30 rounded-lg p-6 text-center">
                 <div className="inline-block text-4xl text-blue-500/30 dark:text-blue-400/30 mb-2">&ldquo;</div>
                 <p className="inline-block text-lg md:text-xl font-medium text-gray-700 dark:text-gray-300 italic min-h-[1.5em] flex items-center justify-center">
                   <TypingAnimation 
-                    text="Just gamble"
+                    key={`quote1-${language}`}
+                    text={t('hero.quote')}
                     speed={40}
                     delay={1000}
                     className="inline-block"
                   /><TypingAnimation 
-                    text=", if you prepared to lose it all."
+                    key={`quote2-${language}`}
+                    text={t('hero.quoteSecond')}
                     speed={100}
                     delay={3000}
                     className="inline-block"
                   />
                 </p>
                 <div className="inline-block text-4xl text-blue-500/30 dark:text-blue-400/30 mt-2">&rdquo;</div>
-                <cite className="block text-sm text-gray-500 dark:text-gray-400 font-medium not-italic">— My Motto</cite>
+                <cite className="block text-sm text-gray-500 dark:text-gray-400 font-medium not-italic">— {t('hero.quoteAuthor')}</cite>
               </blockquote>
             </div>
           </motion.div>
@@ -105,14 +109,30 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
           >
-            <a href="#projects">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer">
-                View My Work
+            <a href="#services">
+              <Button size="lg" className="relative bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 cursor-pointer overflow-hidden group text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-200">
+                <span className="absolute left-2 top-1/2 -translate-y-1/2 font-mono font-bold text-lg text-white/80 group-hover:text-white transition-colors duration-200">
+                  [
+                </span>
+                <span className="mx-6 font-semibold tracking-wide text-white">
+                  {t('hero.buttonServices')}
+                </span>
+                <span className="absolute right-2 top-1/2 -translate-y-1/2 font-mono font-bold text-lg text-white/80 group-hover:text-white transition-colors duration-200">
+                  ]
+                </span>
               </Button>
             </a>
             <a href="#contact">
-              <Button variant="outline" size="lg" className="cursor-pointer">
-                Get In Touch
+              <Button variant="outline" size="lg" className="relative cursor-pointer overflow-hidden group border-2 border-slate-300 dark:border-slate-500 hover:border-blue-500 dark:hover:border-blue-400 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm transition-all duration-200 text-gray-900 dark:text-white font-medium hover:shadow-lg">
+                <span className="absolute left-2 top-1/2 -translate-y-1/2 font-mono font-bold text-lg text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors duration-200">
+                  &gt;
+                </span>
+                <span className="mx-6 font-semibold tracking-wide">
+                  {t('hero.buttonContact')}
+                </span>
+                <span className="absolute right-2 top-1/2 -translate-y-1/2 font-mono font-bold text-lg text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors duration-200">
+                  _
+                </span>
               </Button>
             </a>
           </motion.div>

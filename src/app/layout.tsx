@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans, Electrolize } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
+import LanguageProvider from "@/components/LanguageProvider";
 import 'highlight.js/styles/github-dark.css';
 import '@/lib/suppress-hydration-warnings';
 
@@ -28,8 +29,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ray - Full-Stack Developer",
-  description: "Personal website of Ray, a passionate full-stack developer creating beautiful digital experiences.",
+  title: "Ray Yang - Professional Technical Services",
+  description: "Professional teaching, consulting, and system development services. Helping you achieve technical goals and business growth.",
 };
 
 export const viewport = {
@@ -51,7 +52,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Providers>
-          {children}
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
         </Providers>
       </body>
     </html>

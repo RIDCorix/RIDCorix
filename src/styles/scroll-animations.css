@@ -1,0 +1,331 @@
+/* Scroll-driven Animations using CSS Animation Timeline API */
+
+/* Enable scroll-driven animations */
+@supports (animation-timeline: scroll()) {
+  /* Fade in from bottom on scroll */
+  .scroll-fade-in {
+    animation: fade-in-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  /* Fade in from left */
+  .scroll-fade-left {
+    animation: fade-in-left linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  /* Fade in from right */
+  .scroll-fade-right {
+    animation: fade-in-right linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  /* Scale up on scroll */
+  .scroll-scale {
+    animation: scale-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  /* Rotate and scale */
+  .scroll-rotate-scale {
+    animation: rotate-scale linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  /* Slide in with blur */
+  .scroll-blur-in {
+    animation: blur-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+
+  /* Parallax effect - slower scroll */
+  .scroll-parallax {
+    animation: parallax linear both;
+    animation-timeline: scroll();
+    animation-range: 0% 100%;
+  }
+
+  /* Slide in from bottom */
+  .scroll-slide-up {
+    animation: slide-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 25%;
+  }
+
+  /* Expand horizontally */
+  .scroll-expand {
+    animation: expand linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  /* Reveal with scale and opacity */
+  .scroll-reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+
+  /* Stagger children - add delays */
+  .scroll-stagger > * {
+    animation: fade-in-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  .scroll-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .scroll-stagger > *:nth-child(2) { animation-delay: 100ms; }
+  .scroll-stagger > *:nth-child(3) { animation-delay: 200ms; }
+  .scroll-stagger > *:nth-child(4) { animation-delay: 300ms; }
+  .scroll-stagger > *:nth-child(5) { animation-delay: 400ms; }
+  .scroll-stagger > *:nth-child(6) { animation-delay: 500ms; }
+  .scroll-stagger > *:nth-child(7) { animation-delay: 600ms; }
+  .scroll-stagger > *:nth-child(8) { animation-delay: 700ms; }
+  .scroll-stagger > *:nth-child(9) { animation-delay: 800ms; }
+  .scroll-stagger > *:nth-child(10) { animation-delay: 900ms; }
+
+  /* Sticky header effect */
+  .scroll-sticky-reveal {
+    animation: sticky-reveal linear both;
+    animation-timeline: scroll();
+    animation-range: 0 100px;
+  }
+
+  /* Progress indicator */
+  .scroll-progress {
+    animation: progress linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0% 100%;
+  }
+
+  /* Card lift on scroll */
+  .scroll-card-lift {
+    animation: card-lift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+
+  /* Zoom in effect */
+  .scroll-zoom {
+    animation: zoom-in linear both;
+    animation-timeline: view();
+    animation-range: entry -20% cover 40%;
+  }
+
+  /* Subtle float */
+  .scroll-float {
+    animation: float 3s ease-in-out infinite;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-up {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rotate-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.85) rotate(-3deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes blur-in {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes expand {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes parallax {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50px);
+  }
+}
+
+@keyframes sticky-reveal {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes card-lift {
+  from {
+    transform: translateY(30px) scale(0.95);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Fallback for browsers without scroll-driven animation support */
+@supports not (animation-timeline: scroll()) {
+  .scroll-fade-in,
+  .scroll-fade-left,
+  .scroll-fade-right,
+  .scroll-scale,
+  .scroll-rotate-scale,
+  .scroll-blur-in,
+  .scroll-slide-up,
+  .scroll-expand,
+  .scroll-reveal,
+  .scroll-card-lift,
+  .scroll-zoom,
+  .scroll-stagger > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade-in,
+  .scroll-fade-left,
+  .scroll-fade-right,
+  .scroll-scale,
+  .scroll-rotate-scale,
+  .scroll-blur-in,
+  .scroll-slide-up,
+  .scroll-expand,
+  .scroll-reveal,
+  .scroll-parallax,
+  .scroll-card-lift,
+  .scroll-zoom,
+  .scroll-float,
+  .scroll-stagger > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

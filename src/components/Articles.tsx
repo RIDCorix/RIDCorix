@@ -7,8 +7,10 @@ import { Button } from '@/components/ui/button'
 import { Calendar, Clock, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { getArticles } from '@/lib/articles'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export default function Articles() {
+  const { t } = useLanguage()
   const articles = getArticles().slice(0, 4) // Show only first 4 articles
   return (
     <section id="articles" className="py-20 bg-gray-50 dark:bg-gray-900/50">
@@ -21,10 +23,10 @@ export default function Articles() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Latest Articles
+            {t('articles.title')}
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Thoughts, tutorials, and insights on web development, design, and technology
+            {t('articles.subtitle')}
           </p>
         </motion.div>
 
@@ -78,7 +80,7 @@ export default function Articles() {
                       className="group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20"
                     >
                       <Link href={`/articles/${article.slug}`} className="flex items-center gap-1">
-                        Read more
+                        {t('articles.readMore')}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
@@ -98,7 +100,7 @@ export default function Articles() {
         >
           <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
             <Link href="/articles">
-              View All Articles
+              {t('articles.viewAll')}
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </Button>

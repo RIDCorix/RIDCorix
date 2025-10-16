@@ -1,9 +1,8 @@
 import Hero from '@/components/Hero'
 import About from '@/components/About'
-import Aspects from '@/components/Aspects'
+import Services from '@/components/Services'
 import TransformationAnimation from '@/components/TransformationAnimation'
 import Projects from '@/components/Projects'
-import Articles from '@/components/Articles'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import Navigation from '@/components/Navigation'
@@ -14,7 +13,7 @@ export default function Home() {
       <Navigation />
       <Hero />
       <About />
-      <Aspects />
+      <Services />
       <TransformationAnimation />
       <Projects />
       <Contact />
