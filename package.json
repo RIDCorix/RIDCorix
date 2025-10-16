@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "deploy": "./scripts/deploy.sh",
     "deploy:serve": "./scripts/deploy.sh --serve",
     "pre-deploy": "./scripts/pre-deploy-check.sh",

@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { GraduationCap, Users, Code2, ExternalLink, BookOpen, Settings, Lightbulb } from 'lucide-react'
+import { GraduationCap, Users, Code2, ExternalLink, Settings } from 'lucide-react'
 import { useLanguage } from '@/hooks/useLanguage'
 
 export default function Services() {
@@ -80,7 +80,7 @@ export default function Services() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 scroll-stagger">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <div
               key={service.title}
               className="scroll-rotate-scale transition-transform duration-300 hover:-translate-y-3 hover:scale-[1.02]"

@@ -186,7 +186,9 @@
     /* Use transform3d for better performance and zoom handling */
     transform: translate3d(0, 0, 0);
   }
-  
+  button {
+    cursor: pointer;
+  }
   /* Ensure interactive elements remain clickable at all zoom levels */
   button, 
   a, 
@@ -194,9 +196,6 @@
   input,
   textarea,
   select {
-    /* Ensure minimum touch target size */
-    min-height: 44px;
-    min-width: 44px;
     /* Improve touch interaction */
     touch-action: manipulation;
   }

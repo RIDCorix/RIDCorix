@@ -1,15 +1,11 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Code, Palette, Smartphone, Database, Server, Brain } from 'lucide-react'
+import { Code, Palette, Smartphone, Server } from 'lucide-react'
 import { useLanguage } from '@/hooks/useLanguage'
-import AIMindMap from './AIMindMap'
-import { fadeInUp, staggerContainer, staggerItem, scaleIn, scrollViewport } from '@/lib/scroll-animations'
 
 export default function About() {
-  const { t, language } = useLanguage()
+  const { t } = useLanguage()
   
   const skills = [
     {

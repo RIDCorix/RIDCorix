@@ -1,23 +1,28 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ExternalLink, Github } from 'lucide-react'
+import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { getAssetPath } from '@/lib/utils'
 import { useLanguage } from '@/hooks/useLanguage'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { fadeInUp, staggerContainer, staggerItem, scaleIn, fadeInLeft, fadeInRight, scrollViewport } from '@/lib/scroll-animations'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
 const projects = [
   {
     title: 'Skellar',
     description: 'A skill tree platform for both online courses and in-person workshops, designed to help users track their learning progress and achievements.',
-    image: '/projects/skellar.png',
+    images: [
+      '/projects/skellar/skellar-0.png',
+      '/projects/skellar/skellar-1.png',
+      '/projects/skellar/skellar-2.png',
+      '/projects/skellar/skellar-3.png',
+      '/projects/skellar/skellar-4.png',
+    ],
     technologies: ['Next.js', 'Django', 'Stripe', 'PostgreSQL', 'Tailwind CSS', 'Amazon SQS', 'Redis', 'MCP'],
     liveUrl: 'https://skellar.rn-ws.com/',
     githubUrl: null,
@@ -26,7 +31,7 @@ const projects = [
   {
     title: 'Network The Game',
     description: 'Code to define your units. Gather, build, and conquer in this multiplayer strategy game where you can create your own units and battle against others.',
-    image: '/projects/network.png',
+    images: ['/projects/network.png'],
     technologies: ['Vite', 'Node.js', 'Monaco Editor', 'Shadcn UI', 'Material-UI'],
     liveUrl: 'https://network-the-game.vercel.app/',
     githubUrl: null,
@@ -35,7 +40,7 @@ const projects = [
   {
     title: 'Unfired Studio Official Website',
     description: 'A creative studio website showcasing portfolio, lessons, and resources, with a modern design and smooth animations.',
-    image: '/projects/unfired-studio.png',
+    images: ['/projects/unfired-studio.png'],
     technologies: ['Next.js', 'Apps Script', 'Framer Motion', 'Tailwind CSS'],
     liveUrl: 'https://unfiredstudio.com/',
     githubUrl: null,
@@ -170,10 +175,79 @@ export default function Projects() {
   const featuredProjects = projects.filter(project => project.featured)
   const otherProjects = projects.filter(project => !project.featured)
   
+  // Carousel state for featured projects (main slides)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  
+  // Image carousel state for each project
+  const [projectImageIndex, setProjectImageIndex] = useState<{[key: number]: number}>({})
+  
   // State for each category's active tab
-  const [fullstackTab, setFullstackTab] = useState(0)
   const [pythonTab, setPythonTab] = useState(0)
   const [educationTab, setEducationTab] = useState(0)
+
+  // Auto-play main carousel
+  useEffect(() => {
+    if (!isAutoPlaying) return
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % featuredProjects.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [isAutoPlaying, featuredProjects.length])
+
+  // Auto-play images within each project
+  useEffect(() => {
+    const intervals: NodeJS.Timeout[] = []
+    featuredProjects.forEach((project, projectIdx) => {
+      if (project.images.length > 1) {
+        const interval = setInterval(() => {
+          setProjectImageIndex(prev => ({
+            ...prev,
+            [projectIdx]: ((prev[projectIdx] || 0) + 1) % project.images.length
+          }))
+        }, 3000) // Change image every 3 seconds
+        intervals.push(interval)
+      }
+    })
+    return () => intervals.forEach(interval => clearInterval(interval))
+  }, [featuredProjects])
+
+  const handlePrevSlide = () => {
+    setIsAutoPlaying(false)
+    setCurrentSlide((prev) => (prev - 1 + featuredProjects.length) % featuredProjects.length)
+  }
+
+  const handleNextSlide = () => {
+    setIsAutoPlaying(false)
+    setCurrentSlide((prev) => (prev + 1) % featuredProjects.length)
+  }
+
+  const handleDotClick = (index: number) => {
+    setIsAutoPlaying(false)
+    setCurrentSlide(index)
+  }
+
+  const getCurrentProjectImage = (projectIndex: number) => {
+    const project = featuredProjects[projectIndex]
+    const imageIndex = projectImageIndex[projectIndex] || 0
+    return project.images[imageIndex]
+  }
+
+  const handlePrevImage = (projectIndex: number) => {
+    const project = featuredProjects[projectIndex]
+    setProjectImageIndex(prev => ({
+      ...prev,
+      [projectIndex]: ((prev[projectIndex] || 0) - 1 + project.images.length) % project.images.length
+    }))
+  }
+
+  const handleNextImage = (projectIndex: number) => {
+    const project = featuredProjects[projectIndex]
+    setProjectImageIndex(prev => ({
+      ...prev,
+      [projectIndex]: ((prev[projectIndex] || 0) + 1) % project.images.length
+    }))
+  }
 
   return (
     <section className="py-20 bg-white dark:bg-gray-800" id="projects">
@@ -193,77 +267,192 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        {/* Featured Projects */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-16">
-          {featuredProjects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="cursor-pointer hover:scale-105 transition-transform duration-300"
-              onClick={() => window.open(project.liveUrl, '_blank')}
+        {/* Featured Projects - Carousel */}
+        <div className="relative mb-16">
+          <div className="relative h-[600px] lg:h-[700px] overflow-hidden rounded-3xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0"
+              >
+                <Card className="h-full border-0 bg-transparent">
+                  <div className="grid lg:grid-cols-2 h-full">
+                    {/* Left: Image with auto-cycling */}
+                    <div className="relative h-[300px] lg:h-full overflow-hidden group">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={`${currentSlide}-${projectImageIndex[currentSlide] || 0}`}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.5 }}
+                          className="absolute inset-0"
+                        >
+                          <Image
+                            src={getAssetPath(getCurrentProjectImage(currentSlide))}
+                            alt={`${featuredProjects[currentSlide].title} - Image ${(projectImageIndex[currentSlide] || 0) + 1}`}
+                            layout="fill"
+                            objectFit="cover"
+                            className="object-cover"
+                          />
+                        </motion.div>
+                      </AnimatePresence>
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-white/90 to-transparent dark:from-gray-900/90 dark:to-transparent"></div>
+                      
+                      {/* Image navigation buttons - show on hover if multiple images */}
+                      {featuredProjects[currentSlide].images.length > 1 && (
+                        <>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handlePrevImage(currentSlide)
+                            }}
+                            className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100 z-20"
+                            aria-label="Previous image"
+                          >
+                            <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleNextImage(currentSlide)
+                            }}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100 z-20"
+                            aria-label="Next image"
+                          >
+                            <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+                          </button>
+                        </>
+                      )}
+                      
+                      {/* Image indicators */}
+                      {featuredProjects[currentSlide].images.length > 1 && (
+                        <div className="absolute bottom-4 left-4 flex gap-1.5 z-10">
+                          {featuredProjects[currentSlide].images.map((_, imgIdx) => (
+                            <button
+                              key={imgIdx}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setProjectImageIndex(prev => ({
+                                  ...prev,
+                                  [currentSlide]: imgIdx
+                                }))
+                              }}
+                              className={`h-1.5 rounded-full transition-all duration-300 ${
+                                (projectImageIndex[currentSlide] || 0) === imgIdx
+                                  ? 'w-8 bg-white shadow-lg'
+                                  : 'w-1.5 bg-white/50 hover:bg-white/70'
+                              }`}
+                              aria-label={`Go to image ${imgIdx + 1}`}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right: Content */}
+                    <div className="relative flex flex-col justify-center p-8 lg:p-12">
+                      <div className="space-y-6">
+                        <div>
+                          <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs font-semibold rounded-full mb-4">
+                            Featured Project
+                          </span>
+                          <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4 font-mono">
+                            {">"} {featuredProjects[currentSlide].title} _
+                          </h3>
+                        </div>
+
+                        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                          {featuredProjects[currentSlide].description}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2">
+                          {featuredProjects[currentSlide].technologies.map((tech) => (
+                            <Badge key={tech} variant="default" className="text-sm px-3 py-1">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+
+                        <div className="flex gap-4 pt-4">
+                          <Button 
+                            size="lg"
+                            onClick={() => window.open(featuredProjects[currentSlide].liveUrl, '_blank')}
+                            className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
+                          >
+                            <ExternalLink className="w-5 h-5 mr-2" />
+                            {t('projects.liveDemo')}
+                          </Button>
+                          {featuredProjects[currentSlide].githubUrl && (
+                            <Button 
+                              variant="outline" 
+                              size="lg"
+                              onClick={() => {
+                                if (featuredProjects[currentSlide].githubUrl) {
+                                  window.open(featuredProjects[currentSlide].githubUrl, '_blank');
+                                }
+                              }}
+                            >
+                              <Github className="w-5 h-5 mr-2" />
+                              {t('projects.viewCode')}
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Navigation Controls */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-6 z-10">
+              <button
+                onClick={handlePrevSlide}
+                className="p-3 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl hover:scale-110 hover:shadow-2xl transition-all duration-200 border border-gray-200 dark:border-gray-600"
+                aria-label="Previous project"
+              >
+                <ChevronLeft className="w-6 h-6 text-gray-700 dark:text-gray-200" />
+              </button>
+
+              {/* Dots */}
+              <div className="flex gap-2.5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl border border-gray-200 dark:border-gray-600">
+                {featuredProjects.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleDotClick(index)}
+                    className={`h-2.5 rounded-full transition-all duration-300 ${
+                      currentSlide === index 
+                        ? 'w-10 bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg' 
+                        : 'w-2.5 bg-gray-400 dark:bg-gray-500 hover:bg-gray-500 dark:hover:bg-gray-400'
+                    }`}
+                    aria-label={`Go to project ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={handleNextSlide}
+                className="p-3 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl hover:scale-110 hover:shadow-2xl transition-all duration-200 border border-gray-200 dark:border-gray-600"
+                aria-label="Next project"
+              >
+                <ChevronRight className="w-6 h-6 text-gray-700 dark:text-gray-200" />
+              </button>
+            </div>
+
+            {/* Auto-play toggle */}
+            <button
+              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              className="absolute top-8 right-8 px-4 py-2 rounded-lg font-medium text-sm bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200 dark:border-gray-600"
             >
-              <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
-                <div className="relative h-48 overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                    <Image
-                      src={getAssetPath(project.image)}
-                      alt={project.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-xl font-bold text-gray-900 dark:text-white">
-                   {">"} {project.title} _
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.technologies.map((tech) => (
-                      <Badge key={tech} variant="default" className="text-xs">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex gap-3">
-                    <Button 
-                      size="sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(project.liveUrl, '_blank');
-                      }}
-                    >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      {t('projects.liveDemo')}
-                    </Button>
-                    {project.githubUrl && (
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (project.githubUrl) {
-                            window.open(project.githubUrl, '_blank');
-                          }
-                        }}
-                      >
-                        <Github className="w-4 h-4 mr-2" />
-                        {t('projects.viewCode')}
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+              {isAutoPlaying ? '⏸ Pause' : '▶ Play'}
+            </button>
+          </div>
         </div>
 
         {/* Other Projects */}
@@ -292,7 +481,7 @@ export default function Projects() {
                   <div className="relative h-48 overflow-hidden">
                     <div className="w-full h-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
                       <Image
-                        src={getAssetPath(project.image)}
+                        src={getAssetPath(project.images[0])}
                         alt={project.title}
                         layout="fill"
                         objectFit="cover"
