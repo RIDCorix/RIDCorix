@@ -124,6 +124,32 @@ NOTIFICATION_BACKENDS = {
 }`
   },
   {
+    title: 'Pydantic Commands',
+    description: {
+      en: 'A command-line interface (CLI) framework built on Pydantic for defining commands with type-safe arguments and automatic help generation.',
+      zh: '基於 Pydantic 的命令列介面（CLI）框架，用於定義具有類型安全參數和自動幫助生成的命令。'
+    },
+    url: 'https://github.com/Starscribers/pydantic-commands',
+    technologies: ['Python', 'Pydantic', 'CLI', 'Click'],
+    screenshot: '/projects/pydantic-commands.png',
+
+    codeSnippet: `from pydantic import BaseModel
+from pydantic_commands import command
+
+class GreetArgs(BaseModel):
+    name: str
+    greeting: str = "Hello"
+    enthusiastic: bool = False
+
+@command(name="greet", help="Greet someone", arguments=GreetArgs)
+def greet_command(args: GreetArgs) -> None:
+    message = f"{args.greeting}, {args.name}!"
+    if args.enthusiastic:
+        message = message.upper() + "!!!"
+    print(message)`,
+    category: 'python',
+  },
+  {
     title: 'Django Missions',
     description: {
       en: 'Educational gamification framework for Django, enabling developers to create interactive learning experiences with missions, achievements, and progress tracking.',
